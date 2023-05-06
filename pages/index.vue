@@ -6,8 +6,12 @@
 </template>
 
 <script setup lang="ts">
+import { useUserStore } from "~/stores/userStore";
+import { storeToRefs } from "pinia";
 
-const email = ref<string>();
+const store = useUserStore();
+const { email } = storeToRefs(store);
+const { setEmail, setAuth } = store;
 
 const { axiosInstance } = useApi();
 
@@ -24,8 +28,11 @@ const res = await axiosInstance
   });
 
 if (res?.data?.hello) {
-  email.value = res?.data?.hello ?? "hello";
+  // email.value = res?.data?.hello ?? "hello";
+  setAuth(true);
+  setEmail(res?.data?.hello ?? null);
 } else {
+  setAuth(false);
   navigateTo({
     path: "/login",
   });
