@@ -1,8 +1,12 @@
 import axios from "axios";
 
 export const useApi = () => {
-  const accessToken = useCookie("access_token");
-  const refreshToken = useCookie("refresh_token");
+  const accessToken = useCookie("access_token", {
+    maxAge: 60,
+  });
+  const refreshToken = useCookie("refresh_token", {
+    maxAge: 86400,
+  });
 
   const axiosInstance = axios.create({
     baseURL: "http://localhost:3000/",
@@ -57,15 +61,13 @@ export const useApi = () => {
 
           return axiosInstance.request(originalRequest);
         } catch (error) {
-          accessToken.value = null;
-          refreshToken.value = null;
           return error;
         }
       }
 
       // return new Error("Please login again");
-      accessToken.value = null;
-      refreshToken.value = null;
+      // accessToken.value = null;
+      // refreshToken.value = null;
       return Promise.reject(error);
     }
   );
@@ -75,8 +77,12 @@ export const useApi = () => {
 
 export const useLogout = async () => {
   try {
-    useCookie("access_token").value = null;
-    useCookie("refresh_token").value = null;
+    useCookie("access_token", {
+      maxAge: 60,
+    }).value = null;
+    useCookie("refresh_token", {
+      maxAge: 86400,
+    }).value = null;
 
     // window.location.href = "/login";
     return true;
