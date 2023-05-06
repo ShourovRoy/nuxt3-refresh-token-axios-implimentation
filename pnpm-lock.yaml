@@ -5,10 +5,12 @@ specifiers:
   '@types/node': ^18
   axios: ^1.4.0
   nuxt: ^3.4.3
+  pinia: ^2.0.35
 
 dependencies:
   '@pinia/nuxt': 0.4.9
   axios: 1.4.0
+  pinia: 2.0.35
 
 devDependencies:
   '@types/node': 18.16.3
